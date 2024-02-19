@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
 env: 
-  NEED: false
+  NEED: true
 jobs:
   build:
     name: build
