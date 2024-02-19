@@ -1,0 +1,24 @@
+name: Check Pods
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        proxy_host: ${{ secrets.PROXY_HOST }}
+        proxy_port: ${{ secrets.PROXY_PORT }}
+        proxy_username: ${{ secrets.PROXY_USER }}
+        proxy_password: ${{ secrets.PROXY_PASS }}
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script: whoami
