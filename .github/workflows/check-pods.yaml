@@ -21,4 +21,6 @@ jobs:
         port: ${{ secrets.PORT }}
         username: ${{ secrets.USER }}
         password: ${{ secrets.PASS }}
-        script: whoami
+        script: |
+          ip a
+          kubectl get pods -A
