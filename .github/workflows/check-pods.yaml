@@ -19,6 +19,6 @@ jobs:
         proxy_password: ${{ secrets.PROXY_PASS }}
         host: ${{ secrets.HOST }}
         port: ${{ secrets.PORT }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        username: ${{ secrets.USER }}
+        password: ${{ secrets.PASS }}
         script: whoami
