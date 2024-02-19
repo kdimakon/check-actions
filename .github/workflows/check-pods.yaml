@@ -21,18 +21,10 @@ jobs:
         port: ${{ secrets.PORT }}
         username: ${{ secrets.USER }}
         password: ${{ secrets.PASS }}
+        allenvs: true
         script: |
           ip a
           kubectl get pods -A > output.log
-    - name: Check Crash pods
-      id: check-pods
+    - name: check env
       run: |
-        echo "$(cat  output-pods.log | grep -v Running)" >> crash_report 2>&1
-        echo "pods-dont-work=$(cat output-pods.log | grep -v 'Running\|Completed ' | wc -l)" >> $GITHUB_OUTPUT
-
-    - name: Upload Crashed Pods List
-      if: steps.check-pods.outputs.pods-dont-work != 1
-      uses: actions/upload-artifact@v3
-      with:
-        name: Dead pods
-        path: output-pods.log
+        printenv
