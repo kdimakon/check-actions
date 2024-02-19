@@ -24,8 +24,15 @@ jobs:
         script: |
           ip a
           kubectl get pods -A > output.log
+    - name: Check Crash pods
+      id: check-pods
+      run: |
+        echo "$(cat  output-pods.log | grep -v Running)" >> crash_report 2>&1
+        echo "pods-dont-work=$(cat output-pods.log | grep -v 'Running\|Completed ' | wc -l)" >> $GITHUB_OUTPUT
+
     - name: Upload Crashed Pods List
+      if: steps.check-pods.outputs.pods-dont-work != 1
       uses: actions/upload-artifact@v3
       with:
         name: Dead pods
-        path: output.log
+        path: output-pods.log
