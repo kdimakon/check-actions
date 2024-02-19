@@ -25,6 +25,7 @@ jobs:
         script: |
           ip a
           kubectl get pods -A > output.log
+          export TEST='TEST'
     - name: check env
       run: |
-        printenv
+        printenv TEST
