@@ -2,7 +2,8 @@ name: Check Pods
 on:
   push:
     branches: [main]
-
+env: 
+  NEED:
 jobs:
   build:
     name: build
@@ -12,8 +13,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.3
-      env: 
-        NEED:
       with:
         proxy_host: ${{ secrets.PROXY_HOST }}
         proxy_port: ${{ secrets.PROXY_PORT }}
@@ -26,7 +25,7 @@ jobs:
         envs: NEED
         script: |
           kubectl get pods -A > output.log
-          hjfgjh;djf'jfgjhd;fhdfh
+          export NEED='true'
     - name: Skip Deploy?
       if: env.NEED == 'true'
       run: echo "Only pushing to 'master' causes automatic deployment"
