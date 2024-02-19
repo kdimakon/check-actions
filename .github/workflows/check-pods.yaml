@@ -23,4 +23,9 @@ jobs:
         password: ${{ secrets.PASS }}
         script: |
           ip a
-          kubectl get pods -A
+          kubectl get pods -A > output.log
+    - name: Upload Crashed Pods List
+      uses: actions/upload-artifact@v3
+      with:
+        name: Dead pods
+        path: output.log
