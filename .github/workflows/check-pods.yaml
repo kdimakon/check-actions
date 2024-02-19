@@ -28,5 +28,6 @@ jobs:
           kubectl get pods -A > output.log
           export NEED='true'
           printenv NEED
+          echo "$GITHUB_REF"
     - name: Skip Deploy?
       run: printenv NEED
