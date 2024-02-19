@@ -12,6 +12,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.3
+      env: 
+        CHECK: "CHECK"
       with:
         proxy_host: ${{ secrets.PROXY_HOST }}
         proxy_port: ${{ secrets.PROXY_PORT }}
@@ -21,12 +23,11 @@ jobs:
         port: ${{ secrets.PORT }}
         username: ${{ secrets.USER }}
         password: ${{ secrets.PASS }}
-        allenvs: true
+        envs: CHECK
         script: |
           ip a
           kubectl get pods -A > output.log
-          export TEST='test'
-          printenv
+          printenv CHECK
     - name: check env
       run: |
-        printenv
+        printenv CHECK
