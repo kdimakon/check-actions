@@ -26,7 +26,6 @@ jobs:
         script: |
           kubectl get pods -A > output.log
           export NEED='true'
-          echo "NEED=true" >> "$GITHUB_ENV"
+          printenv NEED
     - name: Skip Deploy?
-      if: env.NEED == 'true'
-      run: echo "Only pushing to 'master' causes automatic deployment"
+      run: printenv NEED
