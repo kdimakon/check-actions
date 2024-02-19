@@ -13,7 +13,7 @@ jobs:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.3
       env: 
-        CHECK: "CHECK"
+        NEED:
       with:
         proxy_host: ${{ secrets.PROXY_HOST }}
         proxy_port: ${{ secrets.PROXY_PORT }}
@@ -23,11 +23,10 @@ jobs:
         port: ${{ secrets.PORT }}
         username: ${{ secrets.USER }}
         password: ${{ secrets.PASS }}
-        envs: CHECK
+        envs: NEED
         script: |
-          ip a
           kubectl get pods -A > output.log
-          printenv CHECK
-    - name: check env
-      run: |
-        printenv CHECK
+          export NEED='true'
+    - name: Skip Deploy?
+      if: env.NEED != 'true'
+      run: echo "Only pushing to 'master' causes automatic deployment"
